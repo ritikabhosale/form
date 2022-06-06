@@ -1,51 +1,10 @@
 const fs = require('fs');
+const { Dob } = require('./dob');
+const { Hobbies } = require('./hobbies');
+const { Name } = require('./name');
 process.stdin.setEncoding('utf8');
 
 const removeLastChar = str => str.slice(0, -1);
-
-class Name {
-  #name;
-  constructor(name) {
-    this.#name = name;
-  }
-  validate(name) {
-    return /^[a-z]*$/.test(name) && name.length > 4;
-  }
-  question() {
-    return 'Pls enter your name:';
-  }
-  set(name) {
-    this.#name = name;
-  }
-  fieldName() {
-    return 'name';
-  }
-  getValue() {
-    return this.#name;
-  }
-}
-
-class Dob {
-  #dob;
-  constructor(dob) {
-    this.#dob = dob;
-  }
-  validate(dob) {
-    return /^\d{4}-\d{2}-\d{2}$/.test(dob);
-  }
-  question() {
-    return 'Pls enter your dob:'
-  }
-  set(dob) {
-    this.#dob = dob;
-  }
-  fieldName() {
-    return 'dob';
-  }
-  getValue() {
-    return this.#dob;
-  }
-}
 
 const storeData = (inputs) => {
   const data = {};
@@ -79,5 +38,5 @@ const acceptDetails = (fields) => {
   });
 };
 
-const fields = [Name, Dob];
+const fields = [Name, Dob, Hobbies];
 acceptDetails(fields);

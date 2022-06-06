@@ -7,7 +7,7 @@ class Name {
     return /^[a-z]*$/.test(name) && name.length > 4;
   }
   question() {
-    return 'Pls enter your name:';
+    return 'Please enter your name:';
   }
   set(name) {
     this.#name = name;
