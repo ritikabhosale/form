@@ -18,8 +18,8 @@ const storeData = (inputs) => {
 
 const acceptDetails = (fields) => {
   let index = 0;
-  let field = new fields[index]('');
   const inputs = [];
+  let field = new fields[index]('');
   console.log(field.question());
 
   process.stdin.on('data', (chunk) => {
@@ -39,5 +39,9 @@ const acceptDetails = (fields) => {
   });
 };
 
-const fields = [Name, Dob, Hobbies, PhoneNo];
-acceptDetails(fields);
+const main = () => {
+  const fields = [Name, Dob, Hobbies, PhoneNo];
+  acceptDetails(fields);
+};
+
+main();
