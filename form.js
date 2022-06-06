@@ -2,6 +2,7 @@ const fs = require('fs');
 const { Dob } = require('./dob');
 const { Hobbies } = require('./hobbies');
 const { Name } = require('./name');
+const { PhoneNo } = require('./phoneNo');
 process.stdin.setEncoding('utf8');
 
 const removeLastChar = str => str.slice(0, -1);
@@ -38,5 +39,5 @@ const acceptDetails = (fields) => {
   });
 };
 
-const fields = [Name, Dob, Hobbies];
+const fields = [Name, Dob, Hobbies, PhoneNo];
 acceptDetails(fields);
