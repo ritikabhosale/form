@@ -18,24 +18,24 @@ const storeData = (inputs) => {
 
 const acceptDetails = (fields) => {
   let index = 0;
-  let askFor = new fields[index]('');
+  let field = new fields[index]('');
   const inputs = [];
-  console.log(askFor.question());
+  console.log(field.question());
 
   process.stdin.on('data', (chunk) => {
     const input = removeLastChar(chunk);
-    if (askFor.validate(input)) {
-      askFor.set(input);
-      inputs.push(askFor);
+    if (field.validate(input)) {
+      field.set(input);
+      inputs.push(field);
       index++;
       if (index === fields.length) {
         storeData(inputs);
         console.log('Thank you');
         process.exit();
       }
-      askFor = new fields[index]('');
+      field = new fields[index]('');
     }
-    console.log(askFor.question());
+    console.log(field.question());
   });
 };
 
