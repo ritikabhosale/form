@@ -47,6 +47,9 @@ const acceptDetails = (fields) => {
       form.set(input);
       form.nextField();
     }
+    else {
+      console.log('Invalid Input.');
+    }
     if (form.finished()) {
       console.log('Thanks');
       form.storeFormDetails();
