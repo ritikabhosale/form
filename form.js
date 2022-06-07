@@ -7,41 +7,61 @@ process.stdin.setEncoding('utf8');
 
 const removeLastChar = str => str.slice(0, -1);
 
-const storeData = (inputs) => {
-  const data = {};
-  inputs.reduce((data, input) => {
-    data[input.fieldName()] = input.getValue();
-    return data;
-  }, data);
-  fs.writeFileSync('./details.json', JSON.stringify(data), 'utf8');
-};
+class Form {
+  #fields;
+  #fieldIndex;
+  constructor(fields, fieldIndex) {
+    this.#fields = fields;
+    this.#fieldIndex = fieldIndex
+  }
+  question() {
+    return this.#fields[this.#fieldIndex].question();
+  }
+  validate(input) {
+    return this.#fields[this.#fieldIndex].validate(input);
+  }
+  set(input) {
+    this.#fields[this.#fieldIndex].set(input);
+  }
+  nextField() {
+    this.#fieldIndex++;
+  }
+  finished() {
+    return this.#fields.length === this.#fieldIndex;
+  }
+  storeFormDetails() {
+    const details = this.#fields.reduce((details, field) => {
+      details[field.fieldName()] = field.getValue();
+      return details;
+    }, {});
+    fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
+  }
+}
 
 const acceptDetails = (fields) => {
-  let index = 0;
-  const inputs = [];
-  let field = new fields[index]('');
-  console.log(field.question());
-
+  const form = new Form(fields, 0);
+  console.log(form.question());
   process.stdin.on('data', (chunk) => {
     const input = removeLastChar(chunk);
-    if (field.validate(input)) {
-      field.set(input);
-      inputs.push(field);
-      index++;
-      if (index === fields.length) {
-        storeData(inputs);
-        console.log('Thank you');
-        process.exit();
-      }
-      field = new fields[index]('');
+    if (form.validate(input)) {
+      form.set(input);
+      form.nextField();
     }
-    console.log(field.question());
+    if (form.finished()) {
+      console.log('Thanks');
+      form.storeFormDetails();
+      process.exit();
+    }
+    console.log(form.question());
   });
 };
 
 const main = () => {
-  const fields = [Name, Dob, Hobbies, PhoneNo];
-  acceptDetails(fields);
-};
+  const name = new Name('');
+  const dob = new Dob('');
+  const hobbies = new Hobbies('');
+  const phoneNo = new PhoneNo('');
+  acceptDetails([name, dob, hobbies, phoneNo]);
+}
 
 main();
