@@ -1,70 +1,42 @@
-const fs = require('fs');
-const { Dob } = require('./dob');
-const { Hobbies } = require('./hobbies');
-const { Name } = require('./name');
-const { PhoneNo } = require('./phoneNo');
-process.stdin.setEncoding('utf8');
-
-const removeLastChar = str => str.slice(0, -1);
+const { Field } = require('./src/field');
 
 class Form {
   #fields;
-  #fieldIndex;
-  constructor(fields, fieldIndex) {
+  #currentFieldIndex;
+  constructor(...fields) {
     this.#fields = fields;
-    this.#fieldIndex = fieldIndex
+    this.#currentFieldIndex = 0;
   }
-  question() {
-    return this.#fields[this.#fieldIndex].question();
+  currentFieldPrompt() {
+    return this.#fields[this.#currentFieldIndex].getPrompt();
   }
-  validate(input) {
-    return this.#fields[this.#fieldIndex].validate(input);
+  fillField(response) {
+    this.#fields[this.#currentFieldIndex].fill(response);
+    this.#currentFieldIndex++;
   }
-  set(input) {
-    this.#fields[this.#fieldIndex].set(input);
-  }
-  nextField() {
-    this.#fieldIndex++;
-  }
-  finished() {
-    return this.#fields.length === this.#fieldIndex;
-  }
-  storeFormDetails() {
-    const details = this.#fields.reduce((details, field) => {
-      details[field.fieldName()] = field.getValue();
-      return details;
-    }, {});
-    fs.writeFileSync('./details.json', JSON.stringify(details), 'utf8');
+  isFilled() {
+    return this.#fields.every(field => field.getResponse());
   }
 }
 
-const acceptDetails = (fields) => {
-  const form = new Form(fields, 0);
-  console.log(form.question());
-  process.stdin.on('data', (chunk) => {
-    const input = removeLastChar(chunk);
-    if (form.validate(input)) {
-      form.set(input);
-      form.nextField();
-    }
-    else {
-      console.log('Invalid Input.');
-    }
-    if (form.finished()) {
-      console.log('Thanks');
-      form.storeFormDetails();
-      process.exit();
-    }
-    console.log(form.question());
-  });
+const registerResponses = (form, response) => {
+  form.fillField(response);
+  if (!form.isFilled()) {
+    console.log(form.currentFieldPrompt());
+    return;
+  }
+  process.stdin.destroy();
+  console.log('Thank you');
 };
 
 const main = () => {
-  const name = new Name('');
-  const dob = new Dob('');
-  const hobbies = new Hobbies('');
-  const phoneNo = new PhoneNo('');
-  acceptDetails([name, dob, hobbies, phoneNo]);
+  const nameField = new Field('name', 'Enter your name');
+  const dobField = new Field('dob', 'Enter your dob');
+  const form = new Form(nameField, dobField);
+  process.stdin.setEncoding('utf8');
+  console.log(form.currentFieldPrompt());
+  process.stdin.on('data', (response) =>
+    registerResponses(form, response.trim()));
 }
 
 main();
