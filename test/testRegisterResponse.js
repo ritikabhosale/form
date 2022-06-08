@@ -91,4 +91,17 @@ describe('registerResponse', () => {
     const logger = mockConsoleLog(['Invalid Input', 'Enter your dob']);
     registerResponse(form, '2001-09-t6', identity, logger);
   });
+
+  it('should parse hobbies into csv', () => {
+    const doesExist = (name) => name.length > 0;
+    const toCsv = str => str.split(',');
+    const identity = x => x;
+
+    const hobbiesField = new Field('hobbies', 'Enter hobbies', doesExist, toCsv);
+    const form = new Form(hobbiesField);
+
+    registerResponse(form, 'singing,dancing', identity, identity);
+    const expected = { hobbies: ['singing', 'dancing'] };
+    assert.deepStrictEqual(form.getResponses(), expected);
+  });
 });

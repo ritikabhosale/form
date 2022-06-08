@@ -1,6 +1,7 @@
 **TODO**
-[ ] Add hobbies and telephone no. input fields
-[ ] Parse each field
+
+[ ] Add address field
+[ ] Create different field entity for address 
 
 **DONE**
 
@@ -11,3 +12,5 @@
 [x] Create a src and test directory
 [x] write tests for registerResponses
 [x] add Validation for fields
+[x] Parse each field
+[x] Add hobbies and telephone no. input fields

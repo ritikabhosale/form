@@ -34,7 +34,7 @@ class Form {
     const responses = {};
     this.#fields.forEach(field => {
       const { name, response } = field.getEntry();
-      responses[name] = response;
+      responses[name] = field.parse(response);
     });
     return responses;
   }

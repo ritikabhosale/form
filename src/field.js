@@ -3,11 +3,13 @@ class Field {
   #prompt;
   #response;
   #validator;
-  constructor(name, prompt, validator = _ => true) {
+  #parser;
+  constructor(name, prompt, validator = _ => true, parser = x => x) {
     this.#name = name;
     this.#prompt = prompt;
     this.#validator = validator;
     this.#response = null;
+    this.#parser = parser;
   }
 
   getPrompt() {
@@ -28,6 +30,10 @@ class Field {
 
   isValid(response) {
     return this.#validator(response);
+  }
+
+  parse(response) {
+    return this.#parser(response);
   }
 
   equals(otherField) {
