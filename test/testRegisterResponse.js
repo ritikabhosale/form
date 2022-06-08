@@ -3,8 +3,11 @@ const { Field } = require('../src/field');
 const { registerResponse } = require('../registerResponse.js');
 const assert = require('assert');
 
-const mockConsoleLog = (expectedOutput) =>
-  actualContent => assert.equal(expectedOutput, actualContent);
+const mockConsoleLog = (expectedOutput) => {
+  let index = 0;
+  return actualContent =>
+    assert.equal(expectedOutput[index++], actualContent);
+};
 
 describe('registerResponse', () => {
   it('should fill a response', () => {
@@ -24,7 +27,7 @@ describe('registerResponse', () => {
     const form = new Form(nameField, dobField);
 
     const identity = x => x;
-    const logger = mockConsoleLog('Enter your dob');
+    const logger = mockConsoleLog(['Enter your dob']);
 
     registerResponse(form, 'reva', identity, logger);
   });
@@ -35,7 +38,7 @@ describe('registerResponse', () => {
     const form = new Form(nameField, dobField);
 
     const identity = x => x;
-    const logger = mockConsoleLog('Enter your dob');
+    const logger = mockConsoleLog(['Enter your dob']);
 
     registerResponse(form, 'reva', identity, logger);
     const expectedResponses = { name: 'reva', dob: null };
@@ -47,7 +50,7 @@ describe('registerResponse', () => {
     const form = new Form(nameField);
 
     const identity = x => x;
-    const logger = mockConsoleLog('Thank you');
+    const logger = mockConsoleLog(['Thank you']);
 
     registerResponse(form, 'reva', identity, logger);
   });
@@ -56,14 +59,36 @@ describe('registerResponse', () => {
     const nameField = new Field('name', 'Enter your name');
     const form = new Form(nameField);
 
-    const identity = x => x;
     let actualResponses = '';
-    const logger = mockConsoleLog('Thank you');
+    const logger = mockConsoleLog(['Thank you']);
     const formContent = (form) => {
       actualResponses = form.getResponses();
     }
     const expectedResponses = { name: 'reva' };
     registerResponse(form, 'reva', formContent, logger);
     assert.deepStrictEqual(actualResponses, expectedResponses);
+  });
+
+  it('should validate the name and reprompt', () => {
+    const isLongEnough = (name) => name.length >= 5;
+    const identity = x => x;
+
+    const nameField = new Field('name', 'Enter your name', isLongEnough);
+    const form = new Form(nameField);
+
+    const logger = mockConsoleLog(['Invalid Input', 'Enter your name']);
+    registerResponse(form, 'reva', identity, logger);
+  });
+
+  it('should validate the dob and reprompt', () => {
+    const isDobValid = dob => /^\d{4}-\d{2}-\d{2}$/.test(dob);
+
+    const identity = x => x;
+
+    const dobField = new Field('name', 'Enter your dob', isDobValid);
+    const form = new Form(dobField);
+
+    const logger = mockConsoleLog(['Invalid Input', 'Enter your dob']);
+    registerResponse(form, '2001-09-t6', identity, logger);
   });
 });

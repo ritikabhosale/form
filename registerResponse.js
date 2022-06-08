@@ -1,9 +1,15 @@
 const registerResponse = (form, response, onResponseReady, logger) => {
-  form.fillField(response);
+  try {
+    form.fillField(response);
+  } catch (error) {
+    logger(error.message);
+  }
+
   if (!form.isFilled()) {
     logger(form.currentFieldPrompt());
     return;
   }
+
   onResponseReady(form);
   logger('Thank you');
 };

@@ -5,16 +5,31 @@ class Form {
     this.#fields = fields;
     this.#currentFieldIndex = 0;
   }
-  currentFieldPrompt() {
-    return this.#fields[this.#currentFieldIndex].getPrompt();
+
+  currentField() {
+    return this.#fields[this.#currentFieldIndex];
   }
+
+  currentFieldPrompt() {
+    return this.currentField().getPrompt();
+  }
+
   fillField(response) {
-    this.#fields[this.#currentFieldIndex].fill(response);
+    if (!this.#validate(response)) {
+      throw new Error('Invalid Input');
+    }
+    this.currentField().fill(response);
     this.#currentFieldIndex++;
   }
+
   isFilled() {
     return this.#fields.every(field => field.getResponse());
   }
+
+  #validate(response) {
+    return this.currentField().isValid(response);
+  }
+
   getResponses() {
     const responses = {};
     this.#fields.forEach(field => {
