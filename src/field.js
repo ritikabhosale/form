@@ -37,7 +37,7 @@ class Field {
   }
 
   isFieldFilled() {
-    return this.#response;
+    return this.#response != null;
   }
 
   equals(otherField) {

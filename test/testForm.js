@@ -30,6 +30,13 @@ describe('Form', () => {
     assert.deepStrictEqual(form.getResponses(), expected);
   });
 
+  it('should throw error if the response is not valid', () => {
+    const isFiveDigits = str => str.length === 5;
+    const nameField = new Field('name', 'Enter name', isFiveDigits);
+    const form = new Form(nameField);
+    assert.throws(() => form.fillField('sakshi'), new Error('Invalid Input'));
+  });
+
   it('should return true when all fields are filled', () => {
     const nameField = new Field('name', 'Enter name');
     const form = new Form(nameField);
