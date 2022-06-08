@@ -1,7 +1,6 @@
 **TODO**
-
-[ ] Add address field
-[ ] Create different field entity for address 
+[ ] write tests for field and multiLinefield
+[ ] delegate the responsibility of writing to file once form is filled to the form itself
 
 **DONE**
 
@@ -14,3 +13,5 @@
 [x] add Validation for fields
 [x] Parse each field
 [x] Add hobbies and telephone no. input fields
+[x] Add address field
+[x] Create different field entity for address 

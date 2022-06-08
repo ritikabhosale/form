@@ -2,11 +2,13 @@ const fs = require('fs');
 const { Form } = require('./form.js');
 const { Field } = require('./src/field');
 const { registerResponse } = require('./registerResponse.js');
+const { MultiLineField } = require('./src/multiLineField.js');
 
 const isNameValid = name => name.length >= 5;
-const areHobbiesValid = hobbies => hobbies.length > 0;
+const doesExist = hobbies => hobbies.length > 0;
 const isDobValid = dob => /^\d{4}-\d{2}-\d{2}$/.test(dob);
 const splitOnComma = str => str.split(',');
+const joinLines = lines => lines.join('\n');
 const areTenDigits = number => /\d{10}/.test(number);
 
 const writeForm = (form) => {
@@ -18,10 +20,11 @@ const writeForm = (form) => {
 const main = () => {
   const nameField = new Field('name', 'Enter your name', isNameValid);
   const dobField = new Field('dob', 'Enter your dob', isDobValid);
-  const hobbiesField = new Field('hobbies', 'Enter your hobbies', areHobbiesValid, splitOnComma);
+  const hobbiesField = new Field('hobbies', 'Enter your hobbies', doesExist, splitOnComma);
   const telephoneNo = new Field('telephoneNo', 'Enter your telephone No', areTenDigits);
+  const address = new MultiLineField('address', ['line 1', 'line 2'], doesExist, joinLines);
 
-  const form = new Form(nameField, dobField, hobbiesField, telephoneNo);
+  const form = new Form(nameField, dobField, hobbiesField, telephoneNo, address);
   process.stdin.setEncoding('utf8');
   console.log(form.currentFieldPrompt());
 

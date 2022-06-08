@@ -36,6 +36,10 @@ class Field {
     return this.#parser(response);
   }
 
+  isFieldFilled() {
+    return this.#response;
+  }
+
   equals(otherField) {
     return otherField instanceof Field &&
       this.#name === otherField.#name &&

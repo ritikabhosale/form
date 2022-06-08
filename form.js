@@ -19,11 +19,13 @@ class Form {
       throw new Error('Invalid Input');
     }
     this.currentField().fill(response);
-    this.#currentFieldIndex++;
+    if (this.currentField().isFieldFilled()) {
+      this.#currentFieldIndex++;
+    }
   }
 
   isFilled() {
-    return this.#fields.every(field => field.getResponse());
+    return this.#fields.every(field => field.isFieldFilled());
   }
 
   #validate(response) {
