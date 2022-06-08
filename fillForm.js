@@ -22,7 +22,7 @@ const main = () => {
   const dobField = new Field('dob', 'Enter your dob', isDobValid);
   const hobbiesField = new Field('hobbies', 'Enter your hobbies', doesExist, splitOnComma);
   const telephoneNo = new Field('telephoneNo', 'Enter your telephone No', areTenDigits);
-  const address = new MultiLineField('address', ['line 1', 'line 2'], doesExist, joinLines);
+  const address = new MultiLineField('address', ['Enter address Line 1', 'Enter address Line 2'], doesExist, joinLines);
 
   const form = new Form(nameField, dobField, hobbiesField, telephoneNo, address);
   process.stdin.setEncoding('utf8');

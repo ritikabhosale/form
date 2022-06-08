@@ -1,3 +1,5 @@
+const { areListsEqual } = require("./areListsEqual");
+
 class MultiLineField {
   #name;
   #prompts;
@@ -45,7 +47,8 @@ class MultiLineField {
 
   equals(otherField) {
     return otherField instanceof MultiLineField &&
-      otherField.#name === this.#name
+      otherField.#name == this.#name &&
+      areListsEqual(otherField.#prompts, this.#prompts);
   }
 }
 
