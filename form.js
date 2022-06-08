@@ -15,5 +15,14 @@ class Form {
   isFilled() {
     return this.#fields.every(field => field.getResponse());
   }
+  getResponses() {
+    const responses = {};
+    this.#fields.forEach(field => {
+      const { name, response } = field.getEntry();
+      responses[name] = response;
+    });
+    return responses;
+  }
 }
-exports.Form = Form;
+
+module.exports = { Form };

@@ -1,5 +1,12 @@
-const { Form } = require('./Form.js');
+const fs = require('fs');
+const { Form } = require('./form.js');
 const { Field } = require('./src/field');
+
+const writeForm = (form) => {
+  const responses = form.getResponses();
+  fs.writeFileSync('details.json', JSON.stringify(responses), 'utf8');
+  process.stdin.destroy();
+};
 
 const registerResponses = (form, response) => {
   form.fillField(response);
@@ -7,7 +14,7 @@ const registerResponses = (form, response) => {
     console.log(form.currentFieldPrompt());
     return;
   }
-  process.stdin.destroy();
+  writeForm(form);
   console.log('Thank you');
 };
 

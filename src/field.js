@@ -16,6 +16,9 @@ class Field {
   getResponse() {
     return this.#response;
   }
+  getEntry() {
+    return { name: this.#name, response: this.#response };
+  }
   equals(otherField) {
     return otherField instanceof Field &&
       this.#name === otherField.#name &&
@@ -23,4 +26,4 @@ class Field {
   }
 }
 
-exports.Field = Field
+module.exports = { Field };
