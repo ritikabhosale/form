@@ -17,14 +17,18 @@ const writeForm = (form) => {
   process.stdin.destroy();
 };
 
-const main = () => {
+const createForm = () => {
   const nameField = new Field('name', 'Enter your name', isNameValid);
   const dobField = new Field('dob', 'Enter your dob', isDobValid);
   const hobbiesField = new Field('hobbies', 'Enter your hobbies', doesExist, splitOnComma);
   const telephoneNo = new Field('telephoneNo', 'Enter your telephone No', areTenDigits);
   const address = new MultiLineField('address', ['Enter address Line 1', 'Enter address Line 2'], doesExist, joinLines);
 
-  const form = new Form(nameField, dobField, hobbiesField, telephoneNo, address);
+  return new Form(nameField, dobField, hobbiesField, telephoneNo, address);
+};
+
+const main = () => {
+  const form = createForm();
   process.stdin.setEncoding('utf8');
   console.log(form.currentFieldPrompt());
 

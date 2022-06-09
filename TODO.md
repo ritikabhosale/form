@@ -1,4 +1,5 @@
 **TODO**
+- [ ] test the main function through bash script
 
 **DONE**
 
