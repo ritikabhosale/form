@@ -10,7 +10,7 @@ const registerResponse = (form, response, onResponseReady, logger) => {
     return;
   }
 
-  onResponseReady(form);
+  onResponseReady(form.getResponses());
   logger('Thank you');
 };
 
