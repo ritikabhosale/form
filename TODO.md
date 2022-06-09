@@ -1,5 +1,4 @@
 **TODO**
-- [ ] test the main function through bash script
 
 **DONE**
 
@@ -16,3 +15,4 @@
 - [x] Create different field entity for address 
 - [x] write tests for field and multiLinefield
 - ~~[x] delegate the responsibility of writing to file once form is filled to the form itself~~
+- [x] test the main function through bash script

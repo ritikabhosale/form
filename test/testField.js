@@ -1,4 +1,4 @@
-const { Field } = require('../src/field');
+const { Field } = require('../src/field.js');
 const assert = require('assert');
 
 describe('Field', () => {
@@ -45,22 +45,22 @@ describe('Field', () => {
 
   it('should parse the given response', () => {
     const capitalize = str => str.toUpperCase();
-    const abc = x => x;
-    const nameField = new Field('name', 'Enter your name', abc, capitalize);
+    const identity = x => x;
+    const nameField = new Field('name', 'Enter name', identity, capitalize);
     assert.equal(nameField.parse('sneha'), 'SNEHA');
   });
 
   it('should return true for valid response', () => {
     const isFiveDigits = str => str.length === 5;
-    const abc = x => x;
-    const nameField = new Field('name', 'Enter your name', isFiveDigits, abc);
+    const identity = x => x;
+    const nameField = new Field('name', 'Enter name', isFiveDigits, identity);
     assert.equal(nameField.isValid('sneha'), true);
   });
 
   it('should return false for invalid response', () => {
     const isFiveDigits = str => str.length === 5;
-    const abc = x => x;
-    const nameField = new Field('name', 'Enter your name', isFiveDigits, abc);
+    const identity = x => x;
+    const nameField = new Field('name', 'Enter name', isFiveDigits, identity);
     assert.equal(nameField.isValid('snehal'), false);
   });
 });

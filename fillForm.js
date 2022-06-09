@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { createForm } = require('./form.js');
+const { createForm } = require('./src/form.js');
 const { registerResponse } = require('./registerResponse.js');
 
 const writeForm = (responses) => {

@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha && bash test/testFillForm.sh",
+    "watch": "mocha -w"
   },
   "repository": {
     "type": "git",

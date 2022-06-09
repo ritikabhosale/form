@@ -1,19 +1,13 @@
-const { Form } = require('../form');
-const { Field } = require('../src/field');
+const { Form } = require('../src/form.js');
+const { Field } = require('../src/field.js');
 const assert = require('assert');
-const { MultiLineField } = require('../src/multiLineField');
+const { MultiLineField } = require('../src/multiLineField.js');
 
 describe('Form', () => {
   it('should return the current field of the form', () => {
     const nameField = new Field('name', 'Enter name');
     const form = new Form(nameField);
     assert.ok(form.currentField().equals(nameField));
-  });
-
-  it('should return the current field prompt of the form', () => {
-    const nameField = new Field('name', 'Enter name');
-    const form = new Form(nameField);
-    assert.equal(form.currentFieldPrompt(), 'Enter name');
   });
 
   it('should return the current field prompt of the form', () => {

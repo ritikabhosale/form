@@ -1,5 +1,5 @@
-const { Field } = require("./src/field");
-const { MultiLineField } = require("./src/multiLineField");
+const { Field } = require('./field.js');
+const { MultiLineField } = require('./multiLineField.js');
 
 class Form {
   #fields;
@@ -62,4 +62,4 @@ const createForm = () => {
   return new Form(nameField, dobField, hobbiesField, telephoneNo, address);
 };
 
-module.exports = { createForm };
+module.exports = { createForm, Form };

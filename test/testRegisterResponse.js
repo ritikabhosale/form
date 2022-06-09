@@ -1,5 +1,5 @@
-const { Form } = require('../form');
-const { Field } = require('../src/field');
+const { Form } = require('../src/form.js');
+const { Field } = require('../src/field.js');
 const { registerResponse } = require('../registerResponse.js');
 const assert = require('assert');
 
@@ -61,8 +61,8 @@ describe('registerResponse', () => {
 
     let actualResponses = '';
     const logger = mockConsoleLog(['Thank you']);
-    const formContent = (form) => {
-      actualResponses = form.getResponses();
+    const formContent = (responses) => {
+      actualResponses = responses;
     }
     const expectedResponses = { name: 'reva' };
     registerResponse(form, 'reva', formContent, logger);
