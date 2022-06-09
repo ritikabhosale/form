@@ -1,0 +1,25 @@
+{
+  "name": "form",
+  "version": "1.0.0",
+  "description": "A form to take user details",
+  "main": "fillForm.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritikabhosale/form.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritikabhosale/form/issues"
+  },
+  "homepage": "https://github.com/ritikabhosale/form#readme",
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
